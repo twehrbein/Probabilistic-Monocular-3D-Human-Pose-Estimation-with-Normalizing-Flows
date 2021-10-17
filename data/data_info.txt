@@ -1,0 +1,13 @@
+Structure of Human3.6M dataset:
+The dataset is saved as a dictionary in a .pickle file.
+Information about the dictionary keys are available in data/data_h36m.py.
+
+For each video, 'imgpath', '3d_gt', '2d_hrnet' and 'gaussfit' are provided:
+'imgpath': list of all used frames (e.g. '/S9/Directions.54138969/4.jpg', '/S9/Directions.54138969/8.jpg', ...)
+'3d_gt': numpy array (#frames, 51), pose vector of form: x0x1...x16y0y1...y16z0z1...z16 (h36m skeleton) in mm
+'p2d_hrnet': numpy array (#frames, 32), pose vector of form: x0x1...x15y0y1...y15 (mpii skeleton)
+'gaussfit': numpy array (#frames, 112), vector contains the amplitude, mean_x, mean_y, sigma_x, theta, sigma_y,
+and computed fit error of the fitted Gaussian for each joint (mpii skeleton) (see utils/fit_gaussians.py,
+and preprocess_gaussian_fits() in utils/data_utils.py)
+
+For the correct joint ordering, see utils/data_utils.py.
