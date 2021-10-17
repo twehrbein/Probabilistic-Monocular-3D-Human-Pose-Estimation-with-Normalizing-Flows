@@ -37,6 +37,7 @@ Evaluate on the hard subset of Human3.6M containing highly ambiguous examples:
 ```
 python eval_whole_set.py --exp original_model
 ```
+Evaluation results are saved to the results/original_model/ directory.
 
 ## Run training code
 Training can be started with:
