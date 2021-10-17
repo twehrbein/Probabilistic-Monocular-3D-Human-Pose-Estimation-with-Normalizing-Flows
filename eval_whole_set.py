@@ -18,7 +18,6 @@ inn.to(c.device)
 inn.load(c.load_model_name, c.device)
 inn.eval()
 
-quick_eval_stride = 1
 c.batch_size = 512
 
 n_hypo = 200
@@ -30,8 +29,8 @@ cps_step = 1
 cps_length = int((cps_max_th + 1 - cps_min_th) / cps_step)
 
 f = open(c.result_dir + "HardSubset_eval_" + c.m_name + ".txt", 'w')
-f.write("Evaluated on every %d -th frame with %d different hypotheses\nand standard dev of %.2f.\n\n\n" %
-        (quick_eval_stride, n_hypo, std_dev))
+f.write("Evaluated with %d different hypotheses and standard dev of %.2f.\n\n\n" %
+        (n_hypo, std_dev))
 
 test_dataset = data.data_h36m.H36MDataset(c.test_file, quick_eval=False, train_set=False, hardsubset=True)
 
@@ -173,16 +172,36 @@ f.write("3D Protocol-II median hypo: %.2f\n" % (total_err_median_p2 / n_poses))
 f.write("3D Protocol-II mean hypo: %.2f\n" % (total_err_mean_p2 / n_poses))
 f.write("3D Protocol-II worst hypo: %.2f\n\n" % (total_err_worst_p2 / n_poses))
 
-f.write("oracle best pck: %.4f\n" % (total_best_pck_oracle_p1 / n_poses))
-f.write("oracle best PA auc cps: %.4f\n" % cps_auc_p2_best)
+f.write("best hypo PCK: %.4f\n" % (total_best_pck_oracle_p1 / n_poses))
+f.write("best hypo CPS: %.4f\n" % cps_auc_p2_best)
+
+print("\nAverage:")
+print("3D Protocol-I z_0: %.2f" % (total_err_z0_p1 / n_poses))
+print("3D Protocol-I best hypo: %.2f" % (total_err_best_p1 / n_poses))
+print("3D Protocol-I median hypo: %.2f" % (total_err_median_p1 / n_poses))
+print("3D Protocol-I mean hypo: %.2f" % (total_err_mean_p1 / n_poses))
+print("3D Protocol-I worst hypo: %.2f\n" % (total_err_worst_p1 / n_poses))
+
+print("3D Protocol-II z_0: %.2f" % (total_err_z0_p2 / n_poses))
+print("3D Protocol-II best hypo: %.2f" % (total_err_best_p2 / n_poses))
+print("3D Protocol-II median hypo: %.2f" % (total_err_median_p2 / n_poses))
+print("3D Protocol-II mean hypo: %.2f" % (total_err_mean_p2 / n_poses))
+print("3D Protocol-II worst hypo: %.2f\n" % (total_err_worst_p2 / n_poses))
+
+print("best hypo PCK: %.4f" % (total_best_pck_oracle_p1 / n_poses))
+print("best hypo CPS: %.4f" % cps_auc_p2_best)
 
 std_dev_in_mm = hypo_stddev / n_poses
 # standard deviation in mm per dimension and per joint:
+print("\nstd dev per joint and dim in mm:")
 f.write("\n\n")
 f.write("std dev per joint and dim in mm:\n")
 for i in range(std_dev_in_mm.shape[1]):
+    print("joint %d: std_x=%.2f, std_y=%.2f, std_z=%.2f" % (i, std_dev_in_mm[0, i], std_dev_in_mm[1, i],
+                                                            std_dev_in_mm[2, i]))
     f.write("joint %d: std_x=%.2f, std_y=%.2f, std_z=%.2f\n" % (i, std_dev_in_mm[0, i], std_dev_in_mm[1, i],
                                                                 std_dev_in_mm[2, i]))
 
 std_dev_means = torch.mean(std_dev_in_mm, dim=1)
+print("mean: std_x=%.2f, std_y=%.2f, std_z=%.2f" % (std_dev_means[0], std_dev_means[1], std_dev_means[2]))
 f.write("mean: std_x=%.2f, std_y=%.2f, std_z=%.2f\n" % (std_dev_means[0], std_dev_means[1], std_dev_means[2]))

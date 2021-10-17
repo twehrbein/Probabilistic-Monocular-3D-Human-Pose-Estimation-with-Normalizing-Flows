@@ -50,8 +50,8 @@ if K_MEANS:
     f = open(c.result_dir + "eval_" + c.m_name + "_withKmeans.txt", 'w')
 else:
     f = open(c.result_dir + "eval_" + c.m_name + ".txt", 'w')
-f.write("Evaluated on every %d -th frame with %d different hypotheses\nand standard dev of %.2f.\n\n\n" %
-        (quick_eval_stride, n_hypo, std_dev))
+f.write("Evaluated on every %d-th frame with %d different hypotheses\nand standard dev of %.2f.\n\n\n" %
+        (quick_eval_stride*4, n_hypo, std_dev))
 
 
 def eval_hypo_stddev(poses_3d):
@@ -229,6 +229,19 @@ f.write("3D Protocol-II best hypo: %.2f\n" % avg_best_p2)
 f.write("3D Protocol-II median hypo: %.2f\n" % avg_median_p2)
 f.write("3D Protocol-II mean hypo: %.2f\n" % avg_mean_p2)
 f.write("3D Protocol-II worst hypo: %.2f\n" % avg_worst_p2)
+
+print("\nAverage:")
+print("3D Protocol-I z_0: %.2f" % avg_z0_p1)
+print("3D Protocol-I best hypo: %.2f" % avg_best_p1)
+print("3D Protocol-I median hypo: %.2f" % avg_median_p1)
+print("3D Protocol-I mean hypo: %.2f" % avg_mean_p1)
+print("3D Protocol-I worst hypo: %.2f\n" % avg_worst_p1)
+
+print("3D Protocol-II z_0: %.2f" % avg_z0_p2)
+print("3D Protocol-II best hypo: %.2f" % avg_best_p2)
+print("3D Protocol-II median hypo: %.2f" % avg_median_p2)
+print("3D Protocol-II mean hypo: %.2f" % avg_mean_p2)
+print("3D Protocol-II worst hypo: %.2f" % avg_worst_p2)
 
 std_dev_in_mm = final_hypo_stddev/len(actions)
 # standard deviation in mm per dimension and per joint:

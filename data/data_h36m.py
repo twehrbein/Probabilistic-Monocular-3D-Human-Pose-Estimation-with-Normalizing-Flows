@@ -53,12 +53,13 @@ class H36MDataset(Dataset):
 
         if hardsubset:
             # use only examples where detector is uncertain
-            # filter according to sqrt(eigenvalues) of Cov Matrix:, default is value of 2 (2px std deviation in train)
+            # filter according to sqrt(eigenvalues) of Cov Matrix:
+            # default is value of c.gt_sigma (c.gt_sigma px std deviation in train)
             fits = gauss_fits.reshape(-1, 16, 7)
-            indices = np.logical_or(fits[:, :, 3] > 5, fits[:, :, 5] > 5)
+            indices = np.logical_or(fits[:, :, 3] > 2.5*c.gt_sigma, fits[:, :, 5] > 2.5*c.gt_sigma)
             indices = np.any(indices, axis=1)
-            print("number of poses with low confidence: ", np.count_nonzero(indices))
-            print("percentage of poses with low confidence: ", np.count_nonzero(indices) / (len(indices)))
+            print("number of highly ambiguous poses: ", np.count_nonzero(indices))
+            print("percentage of highly ambiguous poses: ", np.count_nonzero(indices) / (len(indices)))
 
             poses_3d = poses_3d[indices]
             p2d_hrnet = p2d_hrnet[indices]
