@@ -1,5 +1,5 @@
 # Probabilistic-Monocular-3D-Human-Pose-Estimation-with-Normalizing-Flows
-This is the official implementation of the ICCV 2021 Paper "Probabilistic Monocular 3D Human Pose Estimation with Normalizing Flows" by Tom Wehrbein, Marco Rudolph, Bodo Rosenhahn and Bastian Wandt.
+This is the official implementation of the ICCV 2021 Paper "[Probabilistic Monocular 3D Human Pose Estimation with Normalizing Flows](https://arxiv.org/abs/2107.13788)" by Tom Wehrbein, Marco Rudolph, Bodo Rosenhahn and Bastian Wandt.
 
 ## Installation instructions
 We recommend creating a clean [conda](https://docs.conda.io/) environment. You can do this as follows:
@@ -35,7 +35,7 @@ python eval_action_wise.py --exp original_model
 ```
 Evaluate on the hard subset of Human3.6M containing highly ambiguous examples:
 ```
-python eval_whole_set.py --exp original_model
+python eval_hard_subset.py --exp original_model
 ```
 Evaluation results are saved to the results/original_model/ directory.
 

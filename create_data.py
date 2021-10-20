@@ -189,3 +189,4 @@ def fill_3d_gt_poses(dataset_file, train_set):
 
 fill_3d_gt_poses('data/testset_h36m_without_3d.pickle', train_set=False)
 fill_3d_gt_poses('data/trainset_h36m_without_3d.pickle', train_set=True)
+print('created dataset files successfully!')
