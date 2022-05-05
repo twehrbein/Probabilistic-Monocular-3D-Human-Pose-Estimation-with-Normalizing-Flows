@@ -114,7 +114,7 @@ def root_center_poses(poses_3d):
     # poses_3d is torch array of shape (-1, 51)
     assert poses_3d.shape[1] == 51
     poses_3d = poses_3d.view(-1, 3, 17)
-    poses_3d -= poses_3d[:, :, 0, None]
+    poses_3d -= poses_3d[:, :, 0, None].clone()
     poses_3d = poses_3d.view(-1, 3 * 17)
     return poses_3d
 
